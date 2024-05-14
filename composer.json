@@ -1,5 +1,5 @@
 {
-    "name": "unswer/php",
+    "name": "unswer/unswer",
     "type": "library",
     "description": "Official PHP library for Unswer integration",
     "version": "0.0.0",
