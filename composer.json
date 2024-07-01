@@ -19,24 +19,26 @@
         "issues": "https://github.com/unswer-id/unswer-php/issues"
     },
     "scripts": {
-        "psr2check": [
-            "@php vendor/bin/phpcs --standard=PSR2 --ignore=tests/*,vendor/* ."
+        "psr12check": [
+            "@php vendor/bin/phpcs --standard=PSR12 --ignore=tests/*,vendor/* ."
         ],
-        "psr2autofix": [
-            "@php vendor/bin/phpcbf --standard=PSR2 --ignore=tests/*,vendor/* ."
+        "psr12autofix": [
+            "@php vendor/bin/phpcbf --standard=PSR12 --ignore=tests/*,vendor/* ."
         ],
         "tests": [
             "@php vendor/bin/phpunit --testdox tests"
         ]
     },
     "autoload": {
-        "psr-4": {
+        "psr-12": {
             "Unswer\\": "src/"
         }
     },
     "require": {
         "php": ">=7.4",
-        "guzzlehttp/guzzle": "^7.8"
+        "guzzlehttp/guzzle": "^7.8",
+        "illuminate/collections": "v8.83.27",
+        "rakit/validation": "^1.4"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7",
