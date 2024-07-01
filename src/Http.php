@@ -10,33 +10,35 @@ class Http
      * API Hostname
      * @var string
      */
-    protected static $host = 'http://localhost:3333/api';
+    public static $host;
 
     /**
      * API Version
      * @var string
      */
-    protected static $version = 'v1';
+    public static $version = 'v1';
 
     /**
      * API Key
      * @var string
      */
-    protected static $apiKey;
+    public static $apiKey;
 
     /**
      * HTTP Client
      * @var Client
      */
-    protected $client;
+    public static $client;
 
-    public function __construct($apiKey)
+    public function __construct($apiKey, $host = 'https://unswer.id/api')
     {
+        self::$host ??= $host;
+        self::$apiKey = self::$apiKey ?: ($apiKey ?: getenv('UNSWER_API_KEY'));
+
         self::$client ??= new Client([
             'http_errors' => false,
-            'base_uri' => self::$host . "/" . self::$version,
+            'base_uri' => self::$host . '/' . self::$version . '/',
         ]);
-        self::$apiKey = self::$apiKey ?: ($apiKey ?: getenv('UNSWER_API_KEY'));
     }
 
     /**
@@ -45,7 +47,7 @@ class Http
      * @param array $query
      * @return mixed
      */
-    protected function get($endpoint, $query = [])
+    public function get($endpoint, $query = [])
     {
         $response = self::$client->get($endpoint, [
             'headers' => [
@@ -65,7 +67,7 @@ class Http
      * @param array body
      * @return mixed
      */
-    protected function post($endpoint, $body = [])
+    public function post($endpoint, $body = [])
     {
         $response = self::$client->post($endpoint, [
             'headers' => [
@@ -85,7 +87,7 @@ class Http
      * @param array body
      * @return mixed
      */
-    protected function put($endpoint, $body = [])
+    public function put($endpoint, $body = [])
     {
         $response = self::$client->put($endpoint, [
             'headers' => [
@@ -105,7 +107,7 @@ class Http
      * @param array body
      * @return mixed
      */
-    protected function delete($endpoint, $body = [])
+    public function delete($endpoint, $body = [])
     {
         $response = self::$client->delete($endpoint, [
             'headers' => [
@@ -125,7 +127,7 @@ class Http
      * @param array body
      * @return mixed
      */
-    protected function multipart($endpoint, $body = [])
+    public function multipart($endpoint, $body = [])
     {
         if (!count($body)) {
             return null;

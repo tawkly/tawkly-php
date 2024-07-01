@@ -34,8 +34,9 @@ class BaseClient
     /**
      * @param string $apiKey
      * @param string $appId
+     * @param string $host
      */
-    public function __construct($apiKey = null, $appId = null)
+    public function __construct($apiKey = null, $appId = null, $host = null)
     {
         $apiKey = self::$apiKey ?: ($apiKey ?: getenv('UNSWER_API_KEY'));
         $appId = self::$appId ?: ($appId ?: getenv('UNSWER_APP_ID'));
@@ -46,7 +47,7 @@ class BaseClient
 
         self::$apiKey = $apiKey;
         self::$appId = $appId;
-        self::$http ??= new Http($apiKey);
+        self::$http ??= new Http($apiKey, $host);
         self::$validator ??= new Validator();
     }
 }

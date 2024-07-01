@@ -17,9 +17,18 @@ class ContactService extends BaseClient
     public function create(array $contacts)
     {
         try {
-            // TODO: implement api call to create contact
+            $validation = self::$validator->validate($contacts, [
+                '*.name' => 'required',
+                '*.phone' => 'required|numeric',
+            ]);
 
-            return true;
+            if ($validation->fails()) {
+                $errors = implode(', ', $validation->errors()->all());
+                throw new UnswerException('Validation error: ' . $errors);
+            }
+
+            $response = self::$http->post('contacts/' . self::$appId, $contacts);
+            return $response->statusCode === 201;
         } catch (\Exception $e) {
             throw new UnswerException('Error creating contact: ' . $e->getMessage());
         }
@@ -31,11 +40,26 @@ class ContactService extends BaseClient
      * @throws UnswerException
      * @return Collection
      */
-    public function all($page, $limit)
+    public function all($page = 1, $limit = 10)
     {
         try {
-            // TODO: implement api call to get all contacts
-            $contacts = []; // populate this array with contact data
+            $pagination = [
+                'page' => $page,
+                'limit' => $limit,
+            ];
+
+            $validation = self::$validator->validate($pagination, [
+                'page' => 'numeric',
+                'limit' => 'numeric|max:50',
+            ]);
+
+            if ($validation->fails()) {
+                $errors = implode(', ', $validation->errors()->all());
+                throw new UnswerException('Validation error: ' . $errors);
+            }
+
+            $response = self::$http->get('contacts/' . self::$appId, $pagination);
+            $contacts = array_map(fn ($contact) => new Contact($contact), $response->data);
 
             return new Collection($contacts);
         } catch (\Exception $e) {
@@ -48,12 +72,11 @@ class ContactService extends BaseClient
      * @throws UnswerException
      * @return Contact
      */
-    public function get($id): Contact
+    public function get($id)
     {
         try {
-            // TODO: implement api call to get contact details
-
-            return new Contact($id, '6280000000000', ['tag1', 'tag2'], false, '2023-01-01');
+            $response = self::$http->get('contacts/' . self::$appId . '/' . $id);
+            return new Contact($response->data);
         } catch (\Exception $e) {
             throw new UnswerException('Error fetching contact details: ' . $e->getMessage());
         }
@@ -62,14 +85,13 @@ class ContactService extends BaseClient
     /**
      * @param string $id
      * @throws UnswerException
-     * @return bool
+     * @return Contact
      */
-    public function block($id): bool
+    public function block($id)
     {
         try {
-            // TODO: implement api call to block/unblock contact
-
-            return true;
+            $response = self::$http->put('contacts/' . self::$appId . '/' . $id);
+            return new Contact($response->data);
         } catch (\Exception $e) {
             throw new UnswerException('Error blocking/unblocking contact: ' . $e->getMessage());
         }
@@ -80,12 +102,11 @@ class ContactService extends BaseClient
      * @throws UnswerException
      * @return bool
      */
-    public function delete($id): bool
+    public function delete($id)
     {
         try {
-            // TODO: implement api call to delete contact
-
-            return true;
+            $response = self::$http->delete('contacts/' . self::$appId . '/' . $id);
+            return $response->statusCode === 200;
         } catch (\Exception $e) {
             throw new UnswerException('Error deleting contact: ' . $e->getMessage());
         }

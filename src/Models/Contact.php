@@ -22,6 +22,11 @@ class Contact
     private $tags;
 
     /**
+     * @var string
+     */
+    private $tag;
+
+    /**
      * @var bool
      */
     private $isBlocked;
@@ -31,13 +36,21 @@ class Contact
      */
     private $createdAt;
 
-    public function __construct($id, $phone, $tags, $isBlocked, $createdAt)
+    /**
+     * @param mixed $contact
+     */
+    public function __construct($contact)
     {
-        $this->id = $id;
-        $this->phone = $phone;
+        $tags = property_exists($contact, 'tags')
+            ? $contact->tags
+            : (property_exists($contact, 'tag') ? [$contact->tag] : []);
+
+        $this->id = $contact->id;
+        $this->phone = intval($contact->phone);
         $this->tags = new Collection($tags);
-        $this->isBlocked = $isBlocked;
-        $this->createdAt = $createdAt;
+        $this->tag = $this->tags->first();
+        $this->isBlocked = boolval($contact->is_blocked);
+        $this->createdAt = $contact->created_at;
     }
 
     /**
@@ -62,6 +75,14 @@ class Contact
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 
     /**

@@ -19,18 +19,18 @@
         "issues": "https://github.com/unswer-id/unswer-php/issues"
     },
     "scripts": {
-        "psr12check": [
-            "@php vendor/bin/phpcs --standard=PSR12 --ignore=tests/*,vendor/* ."
+        "psr2check": [
+            "@php vendor/bin/phpcs --standard=PSR2 --ignore=tests/*,vendor/* ."
         ],
-        "psr12autofix": [
-            "@php vendor/bin/phpcbf --standard=PSR12 --ignore=tests/*,vendor/* ."
+        "psr2autofix": [
+            "@php vendor/bin/phpcbf --standard=PSR2 --ignore=tests/*,vendor/* ."
         ],
         "tests": [
             "@php vendor/bin/phpunit --testdox tests"
         ]
     },
     "autoload": {
-        "psr-12": {
+        "psr-4": {
             "Unswer\\": "src/"
         }
     },
