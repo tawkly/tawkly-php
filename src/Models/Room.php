@@ -2,8 +2,6 @@
 
 namespace Unswer\Models;
 
-use Illuminate\Support\Collection;
-
 class Room
 {
     /**
@@ -17,9 +15,9 @@ class Room
     private $phone;
 
     /**
-     * @var Collection
+     * @var string
      */
-    private $tags;
+    private $tag;
 
     /**
      * @var bool
@@ -29,15 +27,18 @@ class Room
     /**
      * @var Message
      */
-    private $latest;
+    private $lastest;
 
-    public function __construct($id, $phone, $tags, $isBlocked, $latest)
+    /**
+     * @param mixed $room
+     */
+    public function __construct($room)
     {
-        $this->id = $id;
-        $this->phone = $phone;
-        $this->tags = new Collection($tags);
-        $this->isBlocked = $isBlocked;
-        $this->latest = $latest;
+        $this->id = $room->id;
+        $this->phone = intval($room->phone);
+        $this->tag = $room->tag;
+        $this->isBlocked = boolval($room->is_blocked);
+        $this->lastest = new Message($room->lastest);
     }
 
     /**
@@ -57,11 +58,11 @@ class Room
     }
 
     /**
-     * @return Collection
+     * @return string
      */
-    public function getTags()
+    public function getTag()
     {
-        return $this->tags;
+        return $this->tag;
     }
 
     /**
@@ -75,8 +76,8 @@ class Room
     /**
      * @return Message
      */
-    public function latest()
+    public function getLastest()
     {
-        return $this->latest;
+        return $this->lastest;
     }
 }

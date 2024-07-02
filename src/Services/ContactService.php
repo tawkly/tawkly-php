@@ -14,7 +14,7 @@ class ContactService extends BaseClient
      * @throws UnswerException
      * @return bool
      */
-    public function create(array $contacts)
+    public function create($contacts)
     {
         try {
             $validation = self::$validator->validate($contacts, [

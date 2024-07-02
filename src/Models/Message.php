@@ -39,15 +39,18 @@ class Message
      */
     private $receivedAt;
 
-    public function __construct($id, $type, $body, $attachmentUrl, $status, $isMe, $receivedAt)
+    /**
+     * @param mixed $message
+     */
+    public function __construct($message)
     {
-        $this->id = $id;
-        $this->type = $type;
-        $this->body = $body;
-        $this->attachmentUrl = $attachmentUrl;
-        $this->status = $status;
-        $this->isMe = $isMe;
-        $this->receivedAt = $receivedAt;
+        $this->id = $message->id;
+        $this->type = $message->type;
+        $this->body = (object) $message->{$message->type};
+        $this->attachmentUrl = $message->attachment;
+        $this->status = $message->status;
+        $this->isMe = boolval($message->is_me);
+        $this->receivedAt = $message->received_at;
     }
 
     /**
@@ -71,8 +74,7 @@ class Message
      */
     public function getBody()
     {
-        // convert array to object
-        return json_decode(json_encode($this->body));
+        return $this->body;
     }
 
     /**

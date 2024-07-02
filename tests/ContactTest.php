@@ -3,19 +3,23 @@
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 use Unswer\Client;
+use Unswer\Exceptions\UnswerException;
 use Unswer\Models\Contact;
 use Unswer\Services\ContactService;
 
 final class ContactTest extends TestCase
 {
     private ContactService $service;
+
     private static $contact;
 
     public function __construct()
     {
         parent::__construct();
 
-        $client = new Client(null, null, 'http://localhost:8081/api');
+        $client = new Client(null, null, [
+            'host' => 'http://localhost:8081/api',
+        ]);
         $this->service = $client->contacts();
     }
 
@@ -35,7 +39,10 @@ final class ContactTest extends TestCase
     public function testCanGetLists()
     {
         $contacts = $this->service->all(1, 10);
-        self::$contact = $contacts->first();
+        $data = array_filter($contacts->toArray(), function ($contact) {
+            return $contact->getPhone() === 6283812345678;
+        });
+        self::$contact = reset($data);
 
         $this->assertInstanceOf(Collection::class, $contacts);
         $this->assertInstanceOf(Contact::class, self::$contact);
@@ -48,23 +55,23 @@ final class ContactTest extends TestCase
     {
         $this->assertNotNull(
             self::$contact,
-            "Contact is null, make sure testCanGetLists runs and sets the contact"
+            'Contact is null, make sure testCanGetLists runs and sets the contact'
         );
+
         $contact = $this->service->get(self::$contact->getId());
 
         $this->assertInstanceOf(Contact::class, $contact);
         $this->assertEquals(self::$contact, $contact);
+        $this->assertEquals(Collection::wrap('John Doe'), $contact->getTags());
+        $this->assertEquals('John Doe', $contact->getTag());
+        $this->assertIsString($contact->getCreatedAt());
     }
 
     /**
-     * @depends testCanGetLists
+     * @depends testCanGetDetail
      */
     public function testCanBlock()
     {
-        $this->assertNotNull(
-            self::$contact,
-            "Contact is null, make sure testCanGetLists runs and sets the contact"
-        );
         $contact = $this->service->block(self::$contact->getId());
 
         $this->assertInstanceOf(Contact::class, $contact);
@@ -75,10 +82,6 @@ final class ContactTest extends TestCase
      */
     public function testCanUnblock()
     {
-        $this->assertNotNull(
-            self::$contact,
-            "Contact is null, make sure testCanGetLists runs and sets the contact"
-        );
         $contact = $this->service->block(self::$contact->getId());
 
         $this->assertInstanceOf(Contact::class, $contact);
@@ -86,16 +89,23 @@ final class ContactTest extends TestCase
     }
 
     /**
-     * @depends testCanGetLists
+     * @depends testCanUnblock
      */
     public function testCanDelete()
     {
-        $this->assertNotNull(
-            self::$contact,
-            "Contact is null, make sure testCanGetLists runs and sets the contact"
-        );
-
         $deleted = $this->service->delete(self::$contact->getId());
         $this->assertTrue($deleted);
+    }
+
+    public function testWithErrorValidation()
+    {
+        $this->expectException(UnswerException::class);
+        $this->service->create(['name' => 58, 'phone' => 'unknown']);
+    }
+
+    public function testWithInvalidLimit()
+    {
+        $this->expectException(UnswerException::class);
+        $this->service->all(['limit' => 80]);
     }
 }

@@ -16,11 +16,26 @@ class MessageService extends BaseClient
      * @throws UnswerException
      * @return Collection
      */
-    public function all($page, $limit): Collection
+    public function all($page = 1, $limit = 10)
     {
         try {
-            // TODO: implement api call to get all rooms
-            $rooms = []; // populate this array with room data
+            $pagination = [
+                'page' => $page,
+                'limit' => $limit,
+            ];
+
+            $validation = self::$validator->validate($pagination, [
+                'page' => 'numeric',
+                'limit' => 'numeric|max:50',
+            ]);
+
+            if ($validation->fails()) {
+                $errors = implode(', ', $validation->errors()->all());
+                throw new UnswerException('Validation error: ' . $errors);
+            }
+
+            $response = self::$http->get('messages/' . self::$appId, $pagination);
+            $rooms = array_map(fn ($room) => new Room($room), $response->data);
 
             return new Collection($rooms);
         } catch (\Exception $e) {
@@ -30,14 +45,31 @@ class MessageService extends BaseClient
 
     /**
      * @param string $roomId
+     * @param int $page
+     * @param int $limit
      * @throws UnswerException
      * @return Collection
      */
-    public function list($roomId): Collection
+    public function list($roomId, $page = 1, $limit = 10)
     {
         try {
-            // TODO: implement api call to get messages for a room
-            $messages = []; // populate this array with message data
+            $pagination = [
+                'page' => $page,
+                'limit' => $limit,
+            ];
+
+            $validation = self::$validator->validate($pagination, [
+                'page' => 'numeric',
+                'limit' => 'numeric|max:50',
+            ]);
+
+            if ($validation->fails()) {
+                $errors = implode(', ', $validation->errors()->all());
+                throw new UnswerException('Validation error: ' . $errors);
+            }
+
+            $response = self::$http->get('messages/' . self::$appId . '/' . $roomId, $pagination);
+            $messages = array_map(fn ($message) => new Message($message), $response->data);
 
             return new Collection($messages);
         } catch (\Exception $e) {

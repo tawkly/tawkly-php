@@ -30,15 +30,21 @@ class Http
      */
     public static $client;
 
-    public function __construct($apiKey, $host = 'https://unswer.id/api')
+    /**
+     * @param string $apiKey
+     * @param mixed $config
+     */
+    public function __construct($apiKey, $config = [])
     {
-        self::$host ??= $host;
+        self::$host ??= $config['host'];
         self::$apiKey = self::$apiKey ?: ($apiKey ?: getenv('UNSWER_API_KEY'));
 
-        self::$client ??= new Client([
-            'http_errors' => false,
-            'base_uri' => self::$host . '/' . self::$version . '/',
-        ]);
+        unset($config['host']);
+
+        $base = self::$host . '/' . self::$version . '/';
+        $config = array_merge_recursive(['http_errors' => false, 'base_uri' => $base], $config);
+
+        self::$client ??= new Client($config);
     }
 
     /**
