@@ -5,6 +5,7 @@ use PHPUnit\Framework\TestCase;
 use Unswer\Client;
 use Unswer\Exceptions\UnswerException;
 use Unswer\Models\Message;
+use Unswer\Models\Pager;
 use Unswer\Models\Room;
 use Unswer\Services\MessageService;
 
@@ -26,10 +27,13 @@ final class MessageTest extends TestCase
     public function testCanGetRooms()
     {
         $rooms = $this->service->all(1, 10);
-        self::$room = $rooms->first();
+
+        $this->assertInstanceOf(Pager::class, $rooms);
+        $this->assertInstanceOf(Collection::class, $rooms->items());
+
+        self::$room = $rooms->items()->first();
 
         // TODO: assert equals from send message method
-        $this->assertInstanceOf(Collection::class, $rooms);
         $this->assertInstanceOf(Room::class, self::$room);
         $this->assertIsString(self::$room->getId());
         $this->assertIsInt(self::$room->getPhone());
@@ -44,10 +48,13 @@ final class MessageTest extends TestCase
     public function testCanGetMessages()
     {
         $messages = $this->service->list(self::$room->getId());
-        $message = $messages->first();
+
+        $this->assertInstanceOf(Pager::class, $messages);
+        $this->assertInstanceOf(Collection::class, $messages->items());
+
+        $message = $messages->items()->first();
 
         // TODO: assert equals from send message method
-        $this->assertInstanceOf(Collection::class, $messages);
         $this->assertIsString($message->getId());
         $this->assertIsString($message->getType());
         $this->assertIsObject($message->getBody());
@@ -63,6 +70,9 @@ final class MessageTest extends TestCase
         $this->service->all(['limit' => 80]);
     }
 
+    /**
+     * @depends testCanGetRooms
+     */
     public function testMessageWithInvalidLimit()
     {
         $this->expectException(UnswerException::class);

@@ -4,8 +4,8 @@ namespace Unswer\Services;
 
 use Unswer\Exceptions\UnswerException;
 use Unswer\Models\Contact;
-use Illuminate\Support\Collection;
 use Unswer\BaseClient;
+use Unswer\Models\Pager;
 
 class ContactService extends BaseClient
 {
@@ -38,7 +38,7 @@ class ContactService extends BaseClient
      * @param int $page
      * @param int $limit
      * @throws UnswerException
-     * @return Collection
+     * @return Pager
      */
     public function all($page = 1, $limit = 10)
     {
@@ -61,7 +61,7 @@ class ContactService extends BaseClient
             $response = self::$http->get('contacts/' . self::$appId, $pagination);
             $contacts = array_map(fn ($contact) => new Contact($contact), $response->data);
 
-            return new Collection($contacts);
+            return new Pager($contacts, $response->meta, [$this, 'all']);
         } catch (\Exception $e) {
             throw new UnswerException('Error fetching contacts: ' . $e->getMessage());
         }

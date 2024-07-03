@@ -5,6 +5,7 @@ use PHPUnit\Framework\TestCase;
 use Unswer\Client;
 use Unswer\Exceptions\UnswerException;
 use Unswer\Models\Contact;
+use Unswer\Models\Pager;
 use Unswer\Services\ContactService;
 
 final class ContactTest extends TestCase
@@ -39,12 +40,15 @@ final class ContactTest extends TestCase
     public function testCanGetLists()
     {
         $contacts = $this->service->all(1, 10);
-        $data = array_filter($contacts->toArray(), function ($contact) {
+
+        $this->assertInstanceOf(Pager::class, $contacts);
+        $this->assertInstanceOf(Collection::class, $contacts->items());
+
+        $data = array_filter($contacts->items()->toArray(), function ($contact) {
             return $contact->getPhone() === 6283812345678;
         });
         self::$contact = reset($data);
 
-        $this->assertInstanceOf(Collection::class, $contacts);
         $this->assertInstanceOf(Contact::class, self::$contact);
     }
 
