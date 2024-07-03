@@ -36,7 +36,7 @@ class Http
      */
     public function __construct($apiKey, $config = [])
     {
-        self::$host ??= $config['host'];
+        self::$host ??= $config['host'] ?? 'https://unswer.id/api';
         self::$apiKey = self::$apiKey ?: ($apiKey ?: getenv('UNSWER_API_KEY'));
 
         unset($config['host']);
