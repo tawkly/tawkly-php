@@ -44,18 +44,18 @@ class MessageServiceTest extends TestCase
 
     public function testRetrieveRoomListsSuccess()
     {
-        $response = (object)[
+        $response = (object) [
             'data' => [
-                (object)[
+                (object) [
                     'id' => '83facc8c-11c5-11ef-8e7a-00155d34f1bf',
                     'phone' => 6283812345678,
                     'tag' => 'John Doe',
                     'is_blocked' => false,
-                    'lastest' => (object)[
+                    'lastest' => (object) [
                         'id' => 'c8009895-76bf-4bc1-a7c5-3d55b95aa577',
                         'type' => 'text',
-                        'text' => (object)[
-                            'body' => 'lorem ipsum dolor',
+                        'text' => (object) [
+                            'body' => 'lorem ipsum dolor sit amet',
                         ],
                         'attachment' => NULL,
                         'status' => 'sent',
@@ -64,7 +64,7 @@ class MessageServiceTest extends TestCase
                     ],
                 ],
             ],
-            'meta' => (object)[
+            'meta' => (object) [
                 'total' => 1,
                 'limit' => 10,
                 'current_page' => 1,
@@ -92,13 +92,13 @@ class MessageServiceTest extends TestCase
 
     public function testRetrieveMessageListsSuccess()
     {
-        $response = (object)[
+        $response = (object) [
             'data' => [
-                (object)[
+                (object) [
                     'id' => 'c8009895-76bf-4bc1-a7c5-3d55b95aa577',
                     'type' => 'text',
                     'text' => [
-                        'body' => 'selamat sore'
+                        'body' => 'lorem ipsum dolor sit amet'
                     ],
                     'attachment' => null,
                     'status' => 'sent',
@@ -106,7 +106,7 @@ class MessageServiceTest extends TestCase
                     'received_at' => '2024-07-02T15:09:23.000+07:00',
                 ]
             ],
-            'meta' => (object)[
+            'meta' => (object) [
                 'total' => 1,
                 'limit' => 10,
                 'current_page' => 1,

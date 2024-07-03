@@ -48,7 +48,7 @@ class ContactServiceTest extends TestCase
         $this->httpMock->shouldReceive('post')
             ->once()
             ->with('contacts/test_app_id', $request)
-            ->andReturn((object)['statusCode' => 201]);
+            ->andReturn((object) ['statusCode' => 201]);
 
         $created = $this->contactService->create($request);
         $this->assertTrue($created);
@@ -62,9 +62,9 @@ class ContactServiceTest extends TestCase
 
     public function testRetrieveContactListsSuccess()
     {
-        $response = (object)[
+        $response = (object) [
             'data' => [
-                (object)[
+                (object) [
                     'id' => 'a7af8912-abd8-4de2-b0e4-731a002d967d',
                     'phone' => 6283812345678,
                     'tag' => 'John Doe',
@@ -72,7 +72,7 @@ class ContactServiceTest extends TestCase
                     'created_at' => '2024-07-01T15:31:06.000+07:00',
                 ],
             ],
-            'meta' => (object)[
+            'meta' => (object) [
                 'total' => 1,
                 'limit' => 10,
                 'current_page' => 1,
@@ -105,8 +105,8 @@ class ContactServiceTest extends TestCase
 
     public function testGetContactDetailSuccess()
     {
-        $response = (object)[
-            'data' => (object)[
+        $response = (object) [
+            'data' => (object) [
                 "id" => "6ad2d05f-11c5-11ef-8e7a-00155d34f1bf",
                 "phone" => 6283812345678,
                 "tags" => ["John Doe"],
@@ -138,8 +138,8 @@ class ContactServiceTest extends TestCase
 
     public function testBlockContactSuccess()
     {
-        $response = (object)[
-            'data' => (object)[
+        $response = (object) [
+            'data' => (object) [
                 "id" => "6ad2d05f-11c5-11ef-8e7a-00155d34f1bf",
                 "phone" => 6283812345678,
                 "tag" => "John Doe",
@@ -179,8 +179,8 @@ class ContactServiceTest extends TestCase
      */
     public function testUnblockContactSuccess()
     {
-        $response = (object)[
-            'data' => (object)[
+        $response = (object) [
+            'data' => (object) [
                 "id" => "6ad2d05f-11c5-11ef-8e7a-00155d34f1bf",
                 "phone" => 6283812345678,
                 "tag" => "John Doe",
@@ -219,7 +219,7 @@ class ContactServiceTest extends TestCase
         $this->httpMock->shouldReceive('delete')
             ->once()
             ->with('contacts/test_app_id/' . $contactId)
-            ->andReturn((object)['statusCode' => 200]);
+            ->andReturn((object) ['statusCode' => 200]);
 
         $deleted = $this->contactService->delete($contactId);
         $this->assertTrue($deleted);

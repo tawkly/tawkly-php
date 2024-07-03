@@ -10,6 +10,23 @@ use Unswer\Services\MessageService;
 
 class ClientTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->resetPrivateProperties('apiKey');
+        $this->resetPrivateProperties('appId');
+    }
+
+    private function resetPrivateProperties($propertyName)
+    {
+        $reflection = new \ReflectionClass(Client::class);
+        $property = $reflection->getProperty($propertyName);
+
+        $property->setAccessible(true);
+        $property->setValue(null, null);
+    }
+
     public function testConstructWithoutApiKeyAndAppId()
     {
         $this->expectException(UnswerException::class);
