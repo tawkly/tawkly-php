@@ -27,7 +27,7 @@
         ],
         "tests": [
             "@php vendor/bin/phpunit --testdox tests",
-            "@php vendor/bin/phpunit --coverage-html .report"
+            "@php vendor/bin/phpunit --coverage-html reports"
         ]
     },
     "autoload": {
@@ -45,6 +45,7 @@
         "squizlabs/php_codesniffer": "^3.7",
         "phpunit/phpunit": "^9.6",
         "mikey179/vfsstream": "^1.6",
-        "phpunit/php-code-coverage": "^9.2"
+        "phpunit/php-code-coverage": "^9.2",
+        "mockery/mockery": "^1.6"
     }
 }

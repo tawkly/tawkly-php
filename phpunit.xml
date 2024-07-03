@@ -16,13 +16,6 @@
         </testsuite>
     </testsuites>
 
-    <php>
-        <env name="UNSWER_API_KEY"
-            value="oat_MQ.cGQtUGk0YXJMZXU0b2Jxem5iMERRUUk0ckNCaDJtQTdVM2poUm5PbzM4MzA5ODc5MzI"
-            force="true" />
-        <env name="UNSWER_APP_ID" value="698f0d81-53d3-4d31-947f-d999544827ae" force="true" />
-    </php>
-
     <coverage cacheDirectory=".phpunit.cache/code-coverage"
         processUncoveredFiles="true"
         ignoreDeprecatedCodeUnits="true">
