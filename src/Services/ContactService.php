@@ -10,11 +10,9 @@ use Unswer\Models\Pager;
 class ContactService extends BaseClient
 {
     /**
-     * @param array $contacts
      * @throws UnswerException
-     * @return bool
      */
-    public function create($contacts)
+    public function create(array $contacts): bool
     {
         try {
             $validation = self::$validator->validate($contacts, [
@@ -35,12 +33,9 @@ class ContactService extends BaseClient
     }
 
     /**
-     * @param int $page
-     * @param int $limit
      * @throws UnswerException
-     * @return Pager
      */
-    public function all($page = 1, $limit = 10)
+    public function all(int $page = 1, int $limit = 10): Pager
     {
         try {
             $pagination = [
@@ -68,11 +63,9 @@ class ContactService extends BaseClient
     }
 
     /**
-     * @param string $id
      * @throws UnswerException
-     * @return Contact
      */
-    public function get($id)
+    public function get(string $id): Contact
     {
         try {
             $response = self::$http->get('contacts/' . self::$appId . '/' . $id);
@@ -83,11 +76,9 @@ class ContactService extends BaseClient
     }
 
     /**
-     * @param string $id
      * @throws UnswerException
-     * @return Contact
      */
-    public function block($id)
+    public function block(string $id): Contact
     {
         try {
             $response = self::$http->put('contacts/' . self::$appId . '/' . $id);
@@ -98,11 +89,9 @@ class ContactService extends BaseClient
     }
 
     /**
-     * @param string $id
      * @throws UnswerException
-     * @return bool
      */
-    public function delete($id)
+    public function delete(string $id): bool
     {
         try {
             $response = self::$http->delete('contacts/' . self::$appId . '/' . $id);

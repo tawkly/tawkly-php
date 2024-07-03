@@ -2,37 +2,17 @@
 
 namespace Unswer\Models;
 
+use stdClass;
+
 class Room
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private string $id;
+    private int $phone;
+    private string $tag;
+    private bool $isBlocked;
+    private Message $lastest;
 
-    /**
-     * @var int
-     */
-    private $phone;
-
-    /**
-     * @var string
-     */
-    private $tag;
-
-    /**
-     * @var bool
-     */
-    private $isBlocked;
-
-    /**
-     * @var Message
-     */
-    private $lastest;
-
-    /**
-     * @param mixed $room
-     */
-    public function __construct($room)
+    public function __construct(stdClass $room)
     {
         $this->id = $room->id;
         $this->phone = intval($room->phone);
@@ -41,42 +21,27 @@ class Room
         $this->lastest = new Message($room->lastest);
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getPhone()
+    public function getPhone(): int
     {
         return $this->phone;
     }
 
-    /**
-     * @return string
-     */
-    public function getTag()
+    public function getTag(): string
     {
         return $this->tag;
     }
 
-    /**
-     * @return bool
-     */
-    public function isBlocked()
+    public function isBlocked(): bool
     {
         return $this->isBlocked;
     }
 
-    /**
-     * @return Message
-     */
-    public function getLastest()
+    public function getLastest(): Message
     {
         return $this->lastest;
     }

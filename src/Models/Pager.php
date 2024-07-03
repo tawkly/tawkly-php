@@ -3,18 +3,12 @@
 namespace Unswer\Models;
 
 use Illuminate\Support\Collection;
+use stdClass;
 
 class Pager
 {
-    /**
-     * @var mixed
-     */
-    private $collection;
-
-    /**
-     * @var mixed
-     */
-    private $meta;
+    private array $collection;
+    private stdClass $meta;
 
     /**
      * @var callable
@@ -22,21 +16,16 @@ class Pager
     private $method;
 
     /**
-     * @param mixed $collection
-     * @param mixed $meta
      * @param callable $method
      */
-    public function __construct($collection, $meta, $method)
+    public function __construct(array $collection, stdClass $meta, $method)
     {
         $this->collection = $collection;
         $this->meta = $meta;
         $this->method = $method;
     }
 
-    /**
-     * @return Pager
-     */
-    public function next()
+    public function next(): ?Pager
     {
         if (property_exists($this->meta, 'cursors')) {
             return call_user_func($this->method, $this->meta->cursors->after);
@@ -49,10 +38,7 @@ class Pager
         return call_user_func($this->method, $this->meta->next_page);
     }
 
-    /**
-     * @return Pager
-     */
-    public function previous()
+    public function previous(): ?Pager
     {
         if (property_exists($this->meta, 'cursors')) {
             return call_user_func($this->method, $this->meta->cursors->before);
@@ -65,10 +51,7 @@ class Pager
         return call_user_func($this->method, $this->meta->previous_page);
     }
 
-    /**
-     * @return Collection
-     */
-    public function items()
+    public function items(): Collection
     {
         return new Collection($this->collection);
     }

@@ -11,12 +11,9 @@ use Unswer\Models\Pager;
 class MessageService extends BaseClient
 {
     /**
-     * @param int $page
-     * @param int $limit
      * @throws UnswerException
-     * @return Pager
      */
-    public function all($page = 1, $limit = 10)
+    public function all(int $page = 1, int $limit = 10): Pager
     {
         try {
             $pagination = [
@@ -44,13 +41,9 @@ class MessageService extends BaseClient
     }
 
     /**
-     * @param string $roomId
-     * @param int $page
-     * @param int $limit
      * @throws UnswerException
-     * @return Pager
      */
-    public function list($roomId, $page = 1, $limit = 10)
+    public function list(string $roomId, int $page = 1, int $limit = 10): Pager
     {
         try {
             $pagination = [

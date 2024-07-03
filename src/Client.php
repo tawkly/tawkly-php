@@ -10,19 +10,13 @@ class Client extends BaseClient
     private $contactService;
     private $messageService;
 
-    /**
-     * @return ContactService
-     */
-    public function contacts()
+    public function contacts(): ContactService
     {
         $this->contactService ??= new ContactService();
         return $this->contactService;
     }
 
-    /**
-     * @return MessageService
-     */
-    public function messages()
+    public function messages(): MessageService
     {
         $this->messageService ??= new MessageService();
         return $this->messageService;

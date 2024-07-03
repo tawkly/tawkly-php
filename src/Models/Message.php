@@ -2,47 +2,19 @@
 
 namespace Unswer\Models;
 
+use stdClass;
+
 class Message
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private string $id;
+    private string $type;
+    private stdClass $body;
+    private ?string $attachmentUrl;
+    private string $status;
+    private bool $isMe;
+    private string $receivedAt;
 
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var mixed
-     */
-    private $body;
-
-    /**
-     * @var string
-     */
-    private $attachmentUrl;
-
-    /**
-     * @var string
-     */
-    private $status;
-
-    /**
-     * @var bool
-     */
-    private $isMe;
-
-    /**
-     * @var string
-     */
-    private $receivedAt;
-
-    /**
-     * @param mixed $message
-     */
-    public function __construct($message)
+    public function __construct(stdClass $message)
     {
         $this->id = $message->id;
         $this->type = $message->type;
@@ -53,50 +25,32 @@ class Message
         $this->receivedAt = $message->received_at;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBody()
+    public function getBody(): stdClass
     {
         return $this->body;
     }
 
-    /**
-     * @return string
-     */
-    public function getAttachmentUrl()
+    public function getAttachmentUrl(): ?string
     {
         return $this->attachmentUrl;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
 
-    /**
-     * @return bool
-     */
-    public function isMe()
+    public function isMe(): bool
     {
         return $this->isMe;
     }
@@ -104,7 +58,7 @@ class Message
     /**
      * @return string ISO-8601
      */
-    public function getReceivedAt()
+    public function getReceivedAt(): string
     {
         return $this->receivedAt;
     }

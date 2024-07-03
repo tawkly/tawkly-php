@@ -3,38 +3,16 @@
 namespace Unswer;
 
 use GuzzleHttp\Client;
+use stdClass;
 
 class Http
 {
-    /**
-     * API Hostname
-     * @var string
-     */
-    public static $host;
+    public static string $host;
+    public static string $version = 'v1';
+    public static string $apiKey = '';
+    public static Client $client;
 
-    /**
-     * API Version
-     * @var string
-     */
-    public static $version = 'v1';
-
-    /**
-     * API Key
-     * @var string
-     */
-    public static $apiKey;
-
-    /**
-     * HTTP Client
-     * @var Client
-     */
-    public static $client;
-
-    /**
-     * @param string $apiKey
-     * @param mixed $config
-     */
-    public function __construct($apiKey, $config = [])
+    public function __construct(string $apiKey, array $config = [])
     {
         self::$host ??= $config['host'] ?? 'https://unswer.id/api';
         self::$apiKey = self::$apiKey ?: ($apiKey ?: getenv('UNSWER_API_KEY'));
@@ -47,13 +25,7 @@ class Http
         self::$client ??= new Client($config);
     }
 
-    /**
-     * Make a GET requests to Unswer API
-     * @param string $endpoint
-     * @param array $query
-     * @return mixed
-     */
-    public function get($endpoint, $query = [])
+    public function get(string $endpoint, array $query = []): stdClass
     {
         $response = self::$client->get($endpoint, [
             'headers' => [
@@ -67,13 +39,7 @@ class Http
         return json_decode($json);
     }
 
-    /**
-     * Make a POST requests to Unswer API
-     * @param string $endpoint
-     * @param array body
-     * @return mixed
-     */
-    public function post($endpoint, $body = [])
+    public function post(string $endpoint, array $body = []): stdClass
     {
         $response = self::$client->post($endpoint, [
             'headers' => [
@@ -87,13 +53,7 @@ class Http
         return json_decode($json);
     }
 
-    /**
-     * Make a PUT requests to Unswer API
-     * @param string $endpoint
-     * @param array body
-     * @return mixed
-     */
-    public function put($endpoint, $body = [])
+    public function put(string $endpoint, array $body = []): stdClass
     {
         $response = self::$client->put($endpoint, [
             'headers' => [
@@ -107,13 +67,7 @@ class Http
         return json_decode($json);
     }
 
-    /**
-     * Make a DELETE requests to Unswer API
-     * @param string $endpoint
-     * @param array body
-     * @return mixed
-     */
-    public function delete($endpoint, $body = [])
+    public function delete(string $endpoint, array $body = []): stdClass
     {
         $response = self::$client->delete($endpoint, [
             'headers' => [
@@ -127,13 +81,7 @@ class Http
         return json_decode($json);
     }
 
-    /**
-     * Upload file to Unswer API
-     * @param string $endpoint
-     * @param array body
-     * @return mixed
-     */
-    public function multipart($endpoint, $body = [])
+    public function multipart(string $endpoint, array $body = []): ?stdClass
     {
         if (!count($body)) {
             return null;

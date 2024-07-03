@@ -3,43 +3,18 @@
 namespace Unswer\Models;
 
 use Illuminate\Support\Collection;
+use stdClass;
 
 class Contact
 {
-    /**
-     * @var string
-     */
-    private $id;
+    private string $id;
+    private int $phone;
+    private Collection $tags;
+    private string $tag;
+    private bool $isBlocked;
+    private string $createdAt;
 
-    /**
-     * @var int
-     */
-    private $phone;
-
-    /**
-     * @var Collection
-     */
-    private $tags;
-
-    /**
-     * @var string
-     */
-    private $tag;
-
-    /**
-     * @var bool
-     */
-    private $isBlocked;
-
-    /**
-     * @var string
-     */
-    private $createdAt;
-
-    /**
-     * @param mixed $contact
-     */
-    public function __construct($contact)
+    public function __construct(stdClass $contact)
     {
         $tags = property_exists($contact, 'tags')
             ? $contact->tags
@@ -53,42 +28,27 @@ class Contact
         $this->createdAt = $contact->created_at;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getPhone()
+    public function getPhone(): int
     {
         return $this->phone;
     }
 
-    /**
-     * @return Collection
-     */
-    public function getTags()
+    public function getTags(): Collection
     {
         return $this->tags;
     }
 
-    /**
-     * @return string
-     */
-    public function getTag()
+    public function getTag(): string
     {
         return $this->tag;
     }
 
-    /**
-     * @return bool
-     */
-    public function isBlocked()
+    public function isBlocked(): bool
     {
         return $this->isBlocked;
     }
@@ -96,7 +56,7 @@ class Contact
     /**
      * @return string ISO-8601
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
