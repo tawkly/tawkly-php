@@ -13,14 +13,10 @@ use Unswer\Models\Contact;
 class ContactServiceTest extends TestCase
 {
     /**
-     * @var ContactService
-     */
-    protected $contactService;
-
-    /**
      * @var \Mockery\LegacyMockInterface&\Mockery\MockInterface&object
      */
     protected $httpMock;
+    protected ContactService $contactService;
 
     protected function setUp(): void
     {

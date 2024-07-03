@@ -10,10 +10,7 @@ use Mockery;
 
 class HttpTest extends TestCase
 {
-    /**
-     * @var Http
-     */
-    protected $http;
+    protected Http $http;
 
     /**
      * @var \Mockery\LegacyMockInterface&\Mockery\MockInterface&object

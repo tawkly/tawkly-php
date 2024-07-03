@@ -14,14 +14,10 @@ use Unswer\Models\Room;
 class MessageServiceTest extends TestCase
 {
     /**
-     * @var MessageService
-     */
-    protected $messageService;
-
-    /**
      * @var \Mockery\LegacyMockInterface&\Mockery\MockInterface&object
      */
     protected $httpMock;
+    protected MessageService $messageService;
 
     protected function setUp(): void
     {

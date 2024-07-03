@@ -8,10 +8,7 @@ use Illuminate\Support\Collection;
 
 class ContactTest extends TestCase
 {
-    /**
-     * @var Contact
-     */
-    private $contact;
+    private Contact $contact;
 
     public function setUp(): void
     {

@@ -5,22 +5,17 @@ namespace Tests\Models;
 use PHPUnit\Framework\TestCase;
 use Unswer\Models\Pager;
 use Illuminate\Support\Collection;
+use stdClass;
 
 class PagerTest extends TestCase
 {
-    /**
-     * @var array
-     */
-    private $collectionData = [
+    private array $collectionData = [
         ['id' => 1, 'name' => 'Item 1'],
         ['id' => 2, 'name' => 'Item 2'],
         ['id' => 3, 'name' => 'Item 3'],
     ];
 
-    /**
-     * @var object
-     */
-    private $metaData;
+    private stdClass $metaData;
 
     public function setUp(): void
     {

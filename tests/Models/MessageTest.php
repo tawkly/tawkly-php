@@ -7,10 +7,7 @@ use Unswer\Models\Message;
 
 class MessageTest extends TestCase
 {
-    /**
-     * @var Message
-     */
-    private $message;
+    private Message $message;
 
     public function setUp(): void
     {

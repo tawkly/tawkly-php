@@ -8,10 +8,7 @@ use Unswer\Models\Message;
 
 class RoomTest extends TestCase
 {
-    /**
-     * @var Room
-     */
-    private $room;
+    private Room $room;
 
     public function setUp(): void
     {
