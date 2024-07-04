@@ -4,6 +4,7 @@ namespace Unswer;
 
 use Unswer\Exceptions\UnswerException;
 use Rakit\Validation\Validator;
+use Unswer\Rules\CursorRule;
 
 class BaseClient
 {
@@ -11,6 +12,14 @@ class BaseClient
     protected static ?string $appId;
     protected static Http $http;
     protected static Validator $validator;
+
+    private function validator()
+    {
+        $validator = new Validator();
+        $validator->addValidator('cursor', new CursorRule());
+
+        return $validator;
+    }
 
     public function __construct(?string $apiKey = null, ?string $appId = null, array $config = [])
     {
@@ -24,6 +33,6 @@ class BaseClient
         self::$apiKey = $apiKey;
         self::$appId = $appId;
         self::$http ??= new Http($apiKey, $config);
-        self::$validator ??= new Validator();
+        self::$validator ??= $this->validator();
     }
 }

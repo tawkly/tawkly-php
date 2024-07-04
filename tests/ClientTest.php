@@ -7,6 +7,7 @@ use Unswer\Client;
 use Unswer\Exceptions\UnswerException;
 use Unswer\Services\ContactService;
 use Unswer\Services\MessageService;
+use Unswer\Services\TemplateService;
 
 class ClientTest extends TestCase
 {
@@ -45,5 +46,6 @@ class ClientTest extends TestCase
 
         $this->assertInstanceOf(ContactService::class, $client->contacts());
         $this->assertInstanceOf(MessageService::class, $client->messages());
+        $this->assertInstanceOf(TemplateService::class, $client->templates());
     }
 }
