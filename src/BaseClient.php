@@ -5,6 +5,7 @@ namespace Unswer;
 use Unswer\Exceptions\UnswerException;
 use Rakit\Validation\Validator;
 use Unswer\Rules\CursorRule;
+use Unswer\Rules\SnakeCaseRule;
 
 class BaseClient
 {
@@ -17,6 +18,7 @@ class BaseClient
     {
         $validator = new Validator();
         $validator->addValidator('cursor', new CursorRule());
+        $validator->addValidator('snake_case', new SnakeCaseRule());
 
         return $validator;
     }

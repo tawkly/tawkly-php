@@ -44,6 +44,36 @@ class TemplateService extends BaseClient
     /**
      * @throws UnswerException
      */
+    public function create(array $template): bool
+    {
+        try {
+            $validation = self::$validator->validate($template, [
+                'name' => 'required|snake_case',
+                'category' => 'required|in:UTILITY,MARKETING,AUTHENTICATION',
+                'sub_category' => 'in:ORDER_DETAILS,ORDER_STATUS',
+                'language' => 'required|regex:/^[a-z]{2}(_[A-Z]{2})?$/',
+                'ttl' => [
+                    'nullable',
+                    fn($val, $a, $i, $v) => !(in_array($i['category'], ['UTILITY', 'MARKETING']) && $val !== null),
+                ],
+                'components' => [],
+            ]);
+
+            if ($validation->fails()) {
+                $errors = implode(', ', $validation->errors()->all());
+                throw new UnswerException('Validation error: ' . $errors);
+            }
+
+            $response = self::$http->post('templates/' . self::$appId, $template);
+            return $response->statusCode === 202;
+        } catch (\Exception $e) {
+            throw new UnswerException('Error creating template: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * @throws UnswerException
+     */
     public function get(string $id): Template
     {
         try {
