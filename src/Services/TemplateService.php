@@ -1,16 +1,16 @@
 <?php
 
-namespace Unswer\Services;
+namespace Tawkly\Services;
 
-use Unswer\Exceptions\UnswerException;
-use Unswer\Models\Template;
-use Unswer\BaseClient;
-use Unswer\Models\Pager;
+use Tawkly\Exceptions\TawklyException;
+use Tawkly\Models\Template;
+use Tawkly\BaseClient;
+use Tawkly\Models\Pager;
 
 class TemplateService extends BaseClient
 {
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function all(?string $before = null, ?string $after = null, int $limit = 10): Pager
     {
@@ -29,7 +29,7 @@ class TemplateService extends BaseClient
 
             if ($validation->fails()) {
                 $errors = implode(', ', $validation->errors()->all());
-                throw new UnswerException('Validation error: ' . $errors);
+                throw new TawklyException('Validation error: ' . $errors);
             }
 
             $response = self::$http->get('templates/' . self::$appId, $pagination);
@@ -37,12 +37,12 @@ class TemplateService extends BaseClient
 
             return new Pager($templates, $response->meta, [$this, 'all']);
         } catch (\Exception $e) {
-            throw new UnswerException('Error fetching templates: ' . $e->getMessage());
+            throw new TawklyException('Error fetching templates: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function create(array $template): bool
     {
@@ -61,18 +61,18 @@ class TemplateService extends BaseClient
 
             if ($validation->fails()) {
                 $errors = implode(', ', $validation->errors()->all());
-                throw new UnswerException('Validation error: ' . $errors);
+                throw new TawklyException('Validation error: ' . $errors);
             }
 
             $response = self::$http->post('templates/' . self::$appId, $template);
             return $response->statusCode === 202;
         } catch (\Exception $e) {
-            throw new UnswerException('Error creating template: ' . $e->getMessage());
+            throw new TawklyException('Error creating template: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function get(string $id): Template
     {
@@ -80,12 +80,12 @@ class TemplateService extends BaseClient
             $response = self::$http->get('templates/' . self::$appId . '/' . $id);
             return new Template($response->data);
         } catch (\Exception $e) {
-            throw new UnswerException('Error fetching template details: ' . $e->getMessage());
+            throw new TawklyException('Error fetching template details: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function delete(string $id): bool
     {
@@ -93,7 +93,7 @@ class TemplateService extends BaseClient
             $response = self::$http->delete('templates/' . self::$appId . '/' . $id);
             return $response->statusCode === 200;
         } catch (\Exception $e) {
-            throw new UnswerException('Error deleting template: ' . $e->getMessage());
+            throw new TawklyException('Error deleting template: ' . $e->getMessage());
         }
     }
 }

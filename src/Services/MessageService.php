@@ -1,17 +1,17 @@
 <?php
 
-namespace Unswer\Services;
+namespace Tawkly\Services;
 
-use Unswer\Exceptions\UnswerException;
-use Unswer\Models\Room;
-use Unswer\Models\Message;
-use Unswer\BaseClient;
-use Unswer\Models\Pager;
+use Tawkly\Exceptions\TawklyException;
+use Tawkly\Models\Room;
+use Tawkly\Models\Message;
+use Tawkly\BaseClient;
+use Tawkly\Models\Pager;
 
 class MessageService extends BaseClient
 {
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function all(int $page = 1, int $limit = 10): Pager
     {
@@ -28,7 +28,7 @@ class MessageService extends BaseClient
 
             if ($validation->fails()) {
                 $errors = implode(', ', $validation->errors()->all());
-                throw new UnswerException('Validation error: ' . $errors);
+                throw new TawklyException('Validation error: ' . $errors);
             }
 
             $response = self::$http->get('messages/' . self::$appId, $pagination);
@@ -36,12 +36,12 @@ class MessageService extends BaseClient
 
             return new Pager($rooms, $response->meta, [$this, 'all']);
         } catch (\Exception $e) {
-            throw new UnswerException('Error fetching rooms: ' . $e->getMessage());
+            throw new TawklyException('Error fetching rooms: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function list(string $roomId, int $page = 1, int $limit = 10): Pager
     {
@@ -58,7 +58,7 @@ class MessageService extends BaseClient
 
             if ($validation->fails()) {
                 $errors = implode(', ', $validation->errors()->all());
-                throw new UnswerException('Validation error: ' . $errors);
+                throw new TawklyException('Validation error: ' . $errors);
             }
 
             $response = self::$http->get('messages/' . self::$appId . '/' . $roomId, $pagination);
@@ -66,7 +66,7 @@ class MessageService extends BaseClient
 
             return new Pager($messages, $response->meta, [$this, 'list']);
         } catch (\Exception $e) {
-            throw new UnswerException('Error fetching messages: ' . $e->getMessage());
+            throw new TawklyException('Error fetching messages: ' . $e->getMessage());
         }
     }
 }

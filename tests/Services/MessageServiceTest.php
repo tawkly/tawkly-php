@@ -3,13 +3,13 @@
 namespace Tests\Services;
 
 use PHPUnit\Framework\TestCase;
-use Unswer\Services\MessageService;
-use Unswer\Http;
+use Tawkly\Services\MessageService;
+use Tawkly\Http;
 use Mockery;
 use ReflectionClass;
-use Unswer\Exceptions\UnswerException;
-use Unswer\Models\Message;
-use Unswer\Models\Room;
+use Tawkly\Exceptions\TawklyException;
+use Tawkly\Models\Message;
+use Tawkly\Models\Room;
 
 class MessageServiceTest extends TestCase
 {
@@ -34,7 +34,7 @@ class MessageServiceTest extends TestCase
 
     public function testRetrieveRoomListsWithInvalidParams()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
         $this->messageService->all(1, 80);
     }
 
@@ -82,7 +82,7 @@ class MessageServiceTest extends TestCase
 
     public function testRetrieveMessageListsWithInvalidParams()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
         $this->messageService->list('83facc8c-11c5-11ef-8e7a-00155d34f1bf', 1, 80);
     }
 

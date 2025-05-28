@@ -3,7 +3,7 @@
 namespace Tests\Models;
 
 use PHPUnit\Framework\TestCase;
-use Unswer\Models\Message;
+use Tawkly\Models\Message;
 
 class MessageTest extends TestCase
 {

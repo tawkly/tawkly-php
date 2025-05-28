@@ -1,6 +1,6 @@
 <?php
 
-namespace Unswer\Rules;
+namespace Tawkly\Rules;
 
 use Rakit\Validation\Rule;
 

@@ -3,11 +3,11 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Unswer\Client;
-use Unswer\Exceptions\UnswerException;
-use Unswer\Services\ContactService;
-use Unswer\Services\MessageService;
-use Unswer\Services\TemplateService;
+use Tawkly\Client;
+use Tawkly\Exceptions\TawklyException;
+use Tawkly\Services\ContactService;
+use Tawkly\Services\MessageService;
+use Tawkly\Services\TemplateService;
 
 class ClientTest extends TestCase
 {
@@ -30,7 +30,7 @@ class ClientTest extends TestCase
 
     public function testConstructWithoutApiKeyAndAppId()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
         new Client(null, null, []);
     }
 

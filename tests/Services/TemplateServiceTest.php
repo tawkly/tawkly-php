@@ -3,12 +3,12 @@
 namespace Tests\Services;
 
 use PHPUnit\Framework\TestCase;
-use Unswer\Services\TemplateService;
-use Unswer\Http;
+use Tawkly\Services\TemplateService;
+use Tawkly\Http;
 use Mockery;
 use ReflectionClass;
-use Unswer\Exceptions\UnswerException;
-use Unswer\Models\Template;
+use Tawkly\Exceptions\TawklyException;
+use Tawkly\Models\Template;
 
 class TemplateServiceTest extends TestCase
 {
@@ -33,7 +33,7 @@ class TemplateServiceTest extends TestCase
 
     public function testRetrieveTemplateListsWithInvalidParams()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
         $this->templateService->all(null, null, 80);
     }
 
@@ -68,12 +68,12 @@ class TemplateServiceTest extends TestCase
 
     public function testGetTemplateDetailThrowException()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
 
         $this->httpMock->shouldReceive('get')
             ->once()
             ->with('templates/test_app_id/1')
-            ->andThrow(new UnswerException());
+            ->andThrow(new TawklyException());
         $this->templateService->get('1');
     }
 
@@ -93,7 +93,7 @@ class TemplateServiceTest extends TestCase
                         'example' => [
                             'body_text' => [
                                 0 => [
-                                    0 => 'Unswer',
+                                    0 => 'Tawkly',
                                     1 => 'Ahmed',
                                 ],
                             ],
@@ -123,12 +123,12 @@ class TemplateServiceTest extends TestCase
 
     public function testDeleteTemplateThrowException()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
 
         $this->httpMock->shouldReceive('delete')
             ->once()
             ->with('templates/test_app_id/1')
-            ->andThrow(new UnswerException());
+            ->andThrow(new TawklyException());
         $this->templateService->delete('1');
     }
 

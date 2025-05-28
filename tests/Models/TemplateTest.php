@@ -3,7 +3,7 @@
 namespace Tests\Models;
 
 use PHPUnit\Framework\TestCase;
-use Unswer\Models\Template;
+use Tawkly\Models\Template;
 
 class TemplateTest extends TestCase
 {
@@ -26,7 +26,7 @@ class TemplateTest extends TestCase
                     'example' => [
                         'body_text' => [
                             0 => [
-                                0 => 'Unswer',
+                                0 => 'Tawkly',
                                 1 => 'Ahmed',
                             ],
                         ],
@@ -80,7 +80,7 @@ class TemplateTest extends TestCase
                 'example' => [
                     'body_text' => [
                         0 => [
-                            0 => 'Unswer',
+                            0 => 'Tawkly',
                             1 => 'Ahmed',
                         ],
                     ],

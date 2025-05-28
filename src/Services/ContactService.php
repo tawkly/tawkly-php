@@ -1,16 +1,16 @@
 <?php
 
-namespace Unswer\Services;
+namespace Tawkly\Services;
 
-use Unswer\Exceptions\UnswerException;
-use Unswer\Models\Contact;
-use Unswer\BaseClient;
-use Unswer\Models\Pager;
+use Tawkly\Exceptions\TawklyException;
+use Tawkly\Models\Contact;
+use Tawkly\BaseClient;
+use Tawkly\Models\Pager;
 
 class ContactService extends BaseClient
 {
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function create(array $contacts): bool
     {
@@ -22,18 +22,18 @@ class ContactService extends BaseClient
 
             if ($validation->fails()) {
                 $errors = implode(', ', $validation->errors()->all());
-                throw new UnswerException('Validation error: ' . $errors);
+                throw new TawklyException('Validation error: ' . $errors);
             }
 
             $response = self::$http->post('contacts/' . self::$appId, $contacts);
             return $response->statusCode === 201;
         } catch (\Exception $e) {
-            throw new UnswerException('Error creating contact: ' . $e->getMessage());
+            throw new TawklyException('Error creating contact: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function all(int $page = 1, int $limit = 10): Pager
     {
@@ -50,7 +50,7 @@ class ContactService extends BaseClient
 
             if ($validation->fails()) {
                 $errors = implode(', ', $validation->errors()->all());
-                throw new UnswerException('Validation error: ' . $errors);
+                throw new TawklyException('Validation error: ' . $errors);
             }
 
             $response = self::$http->get('contacts/' . self::$appId, $pagination);
@@ -58,12 +58,12 @@ class ContactService extends BaseClient
 
             return new Pager($contacts, $response->meta, [$this, 'all']);
         } catch (\Exception $e) {
-            throw new UnswerException('Error fetching contacts: ' . $e->getMessage());
+            throw new TawklyException('Error fetching contacts: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function get(string $id): Contact
     {
@@ -71,12 +71,12 @@ class ContactService extends BaseClient
             $response = self::$http->get('contacts/' . self::$appId . '/' . $id);
             return new Contact($response->data);
         } catch (\Exception $e) {
-            throw new UnswerException('Error fetching contact details: ' . $e->getMessage());
+            throw new TawklyException('Error fetching contact details: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function block(string $id): Contact
     {
@@ -84,12 +84,12 @@ class ContactService extends BaseClient
             $response = self::$http->put('contacts/' . self::$appId . '/' . $id);
             return new Contact($response->data);
         } catch (\Exception $e) {
-            throw new UnswerException('Error blocking/unblocking contact: ' . $e->getMessage());
+            throw new TawklyException('Error blocking/unblocking contact: ' . $e->getMessage());
         }
     }
 
     /**
-     * @throws UnswerException
+     * @throws TawklyException
      */
     public function delete(string $id): bool
     {
@@ -97,7 +97,7 @@ class ContactService extends BaseClient
             $response = self::$http->delete('contacts/' . self::$appId . '/' . $id);
             return $response->statusCode === 200;
         } catch (\Exception $e) {
-            throw new UnswerException('Error deleting contact: ' . $e->getMessage());
+            throw new TawklyException('Error deleting contact: ' . $e->getMessage());
         }
     }
 }

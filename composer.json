@@ -1,9 +1,9 @@
 {
-    "name": "unswer/unswer",
+    "name": "tawkly/tawkly",
     "type": "library",
-    "description": "Official PHP library for Unswer integration",
+    "description": "Official PHP library for Tawkly integration",
     "version": "0.0.0",
-    "homepage": "https://github.com/unswer-id/unswer-php",
+    "homepage": "https://github.com/tawkly/tawkly-php",
     "license": "MIT",
     "authors": [
         {
@@ -14,9 +14,9 @@
         }
     ],
     "support": {
-        "source": "http://github.com/unswer-id/unswer-php",
-        "docs": "https://github.com/unswer-id/unswer-php/blob/master/README.md",
-        "issues": "https://github.com/unswer-id/unswer-php/issues"
+        "source": "http://github.com/tawkly/tawkly-php",
+        "docs": "https://github.com/tawkly/tawkly-php/blob/master/README.md",
+        "issues": "https://github.com/tawkly/tawkly-php/issues"
     },
     "scripts": {
         "psr2check": [
@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Unswer\\": "src/"
+            "Tawkly\\": "src/"
         }
     },
     "require": {

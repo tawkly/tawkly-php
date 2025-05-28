@@ -3,12 +3,12 @@
 namespace Tests\Services;
 
 use PHPUnit\Framework\TestCase;
-use Unswer\Services\ContactService;
-use Unswer\Http;
+use Tawkly\Services\ContactService;
+use Tawkly\Http;
 use Mockery;
 use ReflectionClass;
-use Unswer\Exceptions\UnswerException;
-use Unswer\Models\Contact;
+use Tawkly\Exceptions\TawklyException;
+use Tawkly\Models\Contact;
 
 class ContactServiceTest extends TestCase
 {
@@ -33,7 +33,7 @@ class ContactServiceTest extends TestCase
 
     public function testCreateContactWithInvalidParams()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
         $this->contactService->create([['name' => 'John Doe', 'phone' => 'unknown']]);
     }
 
@@ -52,7 +52,7 @@ class ContactServiceTest extends TestCase
 
     public function testRetrieveContactListsWithInvalidParams()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
         $this->contactService->all(1, 80);
     }
 
@@ -90,12 +90,12 @@ class ContactServiceTest extends TestCase
 
     public function testGetContactDetailThrowException()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
 
         $this->httpMock->shouldReceive('get')
             ->once()
             ->with('contacts/test_app_id/1')
-            ->andThrow(new UnswerException());
+            ->andThrow(new TawklyException());
         $this->contactService->get('1');
     }
 
@@ -123,12 +123,12 @@ class ContactServiceTest extends TestCase
 
     public function testBlockContactThrowException()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
 
         $this->httpMock->shouldReceive('put')
             ->once()
             ->with('contacts/test_app_id/1')
-            ->andThrow(new UnswerException());
+            ->andThrow(new TawklyException());
         $this->contactService->block('1');
     }
 
@@ -161,12 +161,12 @@ class ContactServiceTest extends TestCase
      */
     public function testUnblockContactThrowException()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
 
         $this->httpMock->shouldReceive('put')
             ->once()
             ->with('contacts/test_app_id/1')
-            ->andThrow(new UnswerException());
+            ->andThrow(new TawklyException());
         $this->contactService->block('1');
     }
 
@@ -199,12 +199,12 @@ class ContactServiceTest extends TestCase
 
     public function testDeleteContactThrowException()
     {
-        $this->expectException(UnswerException::class);
+        $this->expectException(TawklyException::class);
 
         $this->httpMock->shouldReceive('delete')
             ->once()
             ->with('contacts/test_app_id/1')
-            ->andThrow(new UnswerException());
+            ->andThrow(new TawklyException());
         $this->contactService->delete('1');
     }
 

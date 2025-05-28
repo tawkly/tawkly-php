@@ -1,6 +1,6 @@
 <?php
 
-namespace Unswer\Models;
+namespace Tawkly\Models;
 
 use stdClass;
 

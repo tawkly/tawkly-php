@@ -1,11 +1,11 @@
 <?php
 
-namespace Unswer;
+namespace Tawkly;
 
-use Unswer\Exceptions\UnswerException;
+use Tawkly\Exceptions\TawklyException;
 use Rakit\Validation\Validator;
-use Unswer\Rules\CursorRule;
-use Unswer\Rules\SnakeCaseRule;
+use Tawkly\Rules\CursorRule;
+use Tawkly\Rules\SnakeCaseRule;
 
 class BaseClient
 {
@@ -29,7 +29,7 @@ class BaseClient
         $appId = self::$appId ?: ($appId ?: getenv('UNSWER_APP_ID'));
 
         if (empty($apiKey) || empty($appId)) {
-            throw new UnswerException('API Key and App ID must be configured');
+            throw new TawklyException('API Key and App ID must be configured');
         }
 
         self::$apiKey = $apiKey;

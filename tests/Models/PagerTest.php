@@ -3,7 +3,7 @@
 namespace Tests\Models;
 
 use PHPUnit\Framework\TestCase;
-use Unswer\Models\Pager;
+use Tawkly\Models\Pager;
 use Illuminate\Support\Collection;
 use stdClass;
 

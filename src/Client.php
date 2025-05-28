@@ -1,10 +1,10 @@
 <?php
 
-namespace Unswer;
+namespace Tawkly;
 
-use Unswer\Services\ContactService;
-use Unswer\Services\MessageService;
-use Unswer\Services\TemplateService;
+use Tawkly\Services\ContactService;
+use Tawkly\Services\MessageService;
+use Tawkly\Services\TemplateService;
 
 class Client extends BaseClient
 {

@@ -3,8 +3,8 @@
 namespace Tests\Models;
 
 use PHPUnit\Framework\TestCase;
-use Unswer\Models\Room;
-use Unswer\Models\Message;
+use Tawkly\Models\Room;
+use Tawkly\Models\Message;
 
 class RoomTest extends TestCase
 {

@@ -3,7 +3,7 @@
 namespace Tests\Models;
 
 use PHPUnit\Framework\TestCase;
-use Unswer\Models\Contact;
+use Tawkly\Models\Contact;
 use Illuminate\Support\Collection;
 
 class ContactTest extends TestCase

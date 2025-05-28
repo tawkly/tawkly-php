@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Rakit\Validation\Validator;
-use Unswer\Rules\CursorRule;
+use Tawkly\Rules\CursorRule;
 
 class CursorRuleTest extends TestCase
 {
